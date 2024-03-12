@@ -1,6 +1,9 @@
 class Profile < ApplicationRecord
-  belongs_to :user
-
+  
+  # validations
   validates :goals, presence: true
   validates :bio, presence: true
+  
+  # associations
+  belongs_to :user
 end

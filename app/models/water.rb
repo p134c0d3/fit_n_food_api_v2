@@ -1,5 +1,8 @@
 class Water < ApplicationRecord
-  belongs_to :user
 
+  # validations
   validates :ounces, presence: true
+  
+  # associations
+  belongs_to :user
 end
