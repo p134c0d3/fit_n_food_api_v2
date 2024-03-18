@@ -1,14 +1,40 @@
 class WorkoutsController < ApplicationController
-  def index
-    workouts = Workout.all
+  before_action :set_workout, only: %i[update destroy]
+  
+  def create
+    workout = Workout.new(workout_params)
 
-    render json: workouts, status: 200
+    if workout.save
+      render json: workout, status: :created
+    else
+      render json: workout.errors, status: :unprocessable_entity
+    end
   end
 
-  def show 
-    user = User.find(params[:id])
-    workout = user.workouts
+  def update
+    if @workout.update(workout_params)
+      render json: @workout, status: :ok
 
-    render json: workout, status: 200
+    else
+      render json: @workout.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @workout.destroy
+      render json: nil, status: :ok
+    else
+      render json: @workout.errors, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def set_workout
+    @workout = Workout.find(params[:id])
+  end
+
+  def workout_params
+    params.permit(:workout_name, :sets, :reps, :calories_burned, :user_id, :id)
   end
 end

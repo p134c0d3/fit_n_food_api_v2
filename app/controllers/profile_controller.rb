@@ -1,14 +1,40 @@
 class ProfileController < ApplicationController
-  def index
-    profiles = Profile.all 
+  before_action :set_profile, only: %i[update destroy]
+  
+  def create
+    profile = Profile.new(profile_params)
 
-    render json: profiles, status: 200
+    if profile.save
+      render json: profile, status: :created
+    else
+      render json: profile.errors, status: :unprocessable_entity
+    end
   end
 
-  def show 
-    user = User.find(params[:id])
-    profile = user.profile
+  def update
+    if @profile.update(profile_params)
+      render json: @profile, status: :ok
 
-    render json: profile, status: 200
+    else
+      render json: @profile.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @profile.destroy
+      render json: nil, status: :ok
+    else
+      render json: @profile.errors, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def set_profile
+    @profile = Profile.find(params[:id])
+  end
+
+  def profile_params
+    params.permit(:goals, :bio, :user_id, :id)
   end
 end

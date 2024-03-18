@@ -31,8 +31,8 @@ Rails.application.routes.draw do
     get 'profile', to: 'users#profile_index'
   end
 
-  resources :workouts
-  resources :foods
-  resources :waters
-  resources :profiles
+  resources :workouts, only: [:create, :update, :destroy]
+  resources :foods, only: [:create, :update, :destroy]
+  resources :waters, only: [:create, :update, :destroy]
+  resources :profile, only: [:create, :update, :destroy]
 end
