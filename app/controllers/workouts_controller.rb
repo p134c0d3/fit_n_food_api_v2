@@ -1,5 +1,5 @@
 class WorkoutsController < ApplicationController
-  before_action :set_workout, only: %i[update destroy]
+  before_action :set_workout, only: %i[update destroy show]
   
   def create
     workout = Workout.new(workout_params)
