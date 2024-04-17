@@ -11,4 +11,8 @@
     user.foods.create(food_name: Faker::Lorem.sentence, calories: rand(1..1000))
     user.waters.create(ounces: rand(1..100))
   end
+
+  # rand(1..10).times do 
+  #   user.profile.create(bio: Faker::Lorem.sentence, goals: Faker::Lorem.sentence)
+  # end
 end

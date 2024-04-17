@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy workouts_index foods_index waters_index profile_index]
+  before_action :authenticate_request, only: %i[index show update destroy]
   def index
     users = User.all
 
@@ -76,6 +77,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :first_name, :password, :password_confirmation)
+    params.require(:user).permit(:id, :email, :first_name, :password, :password_confirmation)
   end
 end
+   

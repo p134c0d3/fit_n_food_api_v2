@@ -1,5 +1,6 @@
 class ProfileController < ApplicationController
   before_action :set_profile, only: %i[update destroy show]
+  before_action :authenticate_request
   
   def create
     profile = Profile.new(profile_params)

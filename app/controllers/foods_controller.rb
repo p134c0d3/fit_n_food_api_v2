@@ -1,5 +1,6 @@
 class  FoodsController < ApplicationController
   before_action :set_food, only: %i[update destroy show]
+  before_action :authenticate_request
   
   def create
     food = Food.new(food_params)

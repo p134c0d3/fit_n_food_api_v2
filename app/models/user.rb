@@ -9,4 +9,11 @@ class User < ApplicationRecord
   has_many :foods, dependent: :destroy
   has_many :waters, dependent: :destroy
   has_one :profile, dependent: :destroy
+
+  after_create :create_profile
+
+
+  def create_profile
+    Profile.create(user: self)
+  end
 end

@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'sessions/create'
+  scope '/' do 
+    post 'login', to: 'sessions#create'
+  end
+  
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :users do

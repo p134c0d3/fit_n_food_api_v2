@@ -1,5 +1,6 @@
 class WorkoutsController < ApplicationController
   before_action :set_workout, only: %i[update destroy show]
+  before_action :authenticate_request
   
   def create
     workout = Workout.new(workout_params)

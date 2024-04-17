@@ -1,5 +1,6 @@
 class WatersController < ApplicationController
   before_action :set_water, only: %i[update destroy show]
+  before_action :authenticate_request
   
   def create
     water = Water.new(water_params)
