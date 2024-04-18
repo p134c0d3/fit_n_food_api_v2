@@ -2,17 +2,11 @@ class  FoodsController < ApplicationController
   before_action :set_food, only: %i[update destroy show]
   before_action :authenticate_request
   
-  def foods_index
-    foods = Food.all
-
-    render json: FoodsBlueprint.render(foods, view: :normal), status: :ok
-  end
-
   def create
     food = @current_user.foods.new(food_params)
 
     if food.save
-      render json: FoodsBlueprint.render(food, view: :normal), status: :created
+      render json: food, status: :created
     else
       render json: food.errors, status: :unprocessable_entity
     end
@@ -20,7 +14,7 @@ class  FoodsController < ApplicationController
 
   def update
     if @food.update(food_params)
-      render json: FoodsBlueprint.render(food, view: :normal), status: :ok
+      render json: @food, status: :ok
 
     else
       render json: @food.errors, status: :unprocessable_entity

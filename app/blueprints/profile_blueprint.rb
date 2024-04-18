@@ -2,7 +2,7 @@
 
 class ProfileBlueprint < Blueprinter::Base
   identifier :id 
-  fields :user_id, :bio, :goals, :updated_at, :created_at
+  fields :bio, :goals, :updated_at, :created_at
 
   view :normal do 
     association :user, blueprint: UserBlueprint, view: :profile

@@ -2,7 +2,7 @@
 
 class WatersBlueprint < Blueprinter::Base
   identifier :id 
-  fields :user_id, :ounces, :created_at
+  fields :ounces, :created_at
 
   view :normal do 
     association :user, blueprint: UserBlueprint, view: :waters

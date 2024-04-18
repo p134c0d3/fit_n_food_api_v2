@@ -2,17 +2,11 @@ class WorkoutsController < ApplicationController
   before_action :set_workout, only: %i[update destroy show]
   before_action :authenticate_request
   
-  def workouts_index
-    workouts = Workout.all
-
-    render json: WorkoutsBlueprint.render(workouts, view: :normal), status: 200
-  end
-
   def create
     workout = @current_user.workouts.new(workout_params)
 
     if workout.save
-      render json: WorkoutsBlueprint.render(workout, view: :normal), status: :created
+      render json: workout, status: :created
     else
       render json: workout.errors, status: :unprocessable_entity
     end
@@ -20,7 +14,7 @@ class WorkoutsController < ApplicationController
 
   def update
     if @workout.update(workout_params)
-      render json: WorkoutsBlueprint.render(@workout, view: :normal), status: :ok
+      render json: @workout, status: :ok
 
     else
       render json: @workout.errors, status: :unprocessable_entity
