@@ -3,7 +3,7 @@ class ProfileController < ApplicationController
   before_action :authenticate_request
   
   def create
-    profile = Profile.new(profile_params)
+    profile = @current_user.profile.new(profile_params)
 
     if profile.save
       render json: profile, status: :created
@@ -36,6 +36,6 @@ class ProfileController < ApplicationController
   end
 
   def profile_params
-    params.permit(:goals, :bio, :user_id, :id)
+    params.permit(:goals, :bio, :id)
   end
 end

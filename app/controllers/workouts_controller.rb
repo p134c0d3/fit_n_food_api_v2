@@ -3,7 +3,7 @@ class WorkoutsController < ApplicationController
   before_action :authenticate_request
   
   def create
-    workout = Workout.new(workout_params)
+    workout = @current_user.workouts.new(workout_params)
 
     if workout.save
       render json: workout, status: :created
@@ -36,6 +36,6 @@ class WorkoutsController < ApplicationController
   end
 
   def workout_params
-    params.permit(:workout_name, :sets, :reps, :calories_burned, :user_id, :id)
+    params.permit(:workout_name, :sets, :reps, :calories_burned, :id)
   end
 end

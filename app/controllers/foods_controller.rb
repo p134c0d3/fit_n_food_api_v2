@@ -3,7 +3,7 @@ class  FoodsController < ApplicationController
   before_action :authenticate_request
   
   def create
-    food = Food.new(food_params)
+    food = @current_user.foods.new(food_params)
 
     if food.save
       render json: food, status: :created
@@ -36,6 +36,6 @@ class  FoodsController < ApplicationController
   end
 
   def food_params
-    params.permit(:food_name, :calories, :user_id, :id)
+    params.permit(:food_name, :calories, :id)
   end
 end

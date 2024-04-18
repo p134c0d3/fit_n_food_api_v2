@@ -3,7 +3,7 @@ class WatersController < ApplicationController
   before_action :authenticate_request
   
   def create
-    water = Water.new(water_params)
+    water = @current_user.waters.new(water_params)
 
     if water.save
       render json: water, status: :created
@@ -36,6 +36,6 @@ class WatersController < ApplicationController
   end
 
   def water_params
-    params.permit(:ounces, :user_id, :id)
+    params.permit(:ounces, :id)
   end
 end
