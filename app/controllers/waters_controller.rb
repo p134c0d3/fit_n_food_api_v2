@@ -2,11 +2,17 @@ class WatersController < ApplicationController
   before_action :set_water, only: %i[update destroy show]
   before_action :authenticate_request
   
+  def waters_index
+    waters = Water.all
+
+    render json: WatersBlueprint.render(waters, view: :normal), status: :ok
+  end
+
   def create
     water = @current_user.waters.new(water_params)
 
     if water.save
-      render json: water, status: :created
+      render json: WatersBlueprint.render(water, view: :normal), status: :created
     else
       render json: water.errors, status: :unprocessable_entity
     end
@@ -14,7 +20,7 @@ class WatersController < ApplicationController
 
   def update
     if @water.update(water_params)
-      render json: @water, status: :ok
+      render json: WatersBlueprint.render(@water, view: :normal), status: :ok
 
     else
       render json: @water.errors, status: :unprocessable_entity

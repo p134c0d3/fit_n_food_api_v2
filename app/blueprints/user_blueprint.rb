@@ -4,6 +4,6 @@ class UserBlueprint < Blueprinter::Base
   identifier :id 
 
   view :normal do 
-    fields :email, :first_name, :updated_at
+    fields :user_id, :email, :first_name, :updated_at
   end
 end

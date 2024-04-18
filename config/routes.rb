@@ -1,19 +1,18 @@
 Rails.application.routes.draw do
-  scope '/' do 
+  scope '/' do
     post 'login', to: 'sessions#create'
   end
-  
-  get "up" => "rails/health#show", as: :rails_health_check
+
+  get 'up' => 'rails/health#show', as: :rails_health_check
 
   resources :users do
-    get 'workouts', to: 'users#workouts_index'
-    get 'foods', to: 'users#foods_index'
-    get 'waters', to: 'users#waters_index'
-    get 'profile', to: 'users#profile_index'
+    resources :profile, to: 'profile#profile_index'
+    resources :foods, to: 'foods#foods_index'
+    resources :waters, to: 'waters#waters_index'
+    resources :workouts, to: 'workouts#workouts_index'
   end
-
-  resources :workouts, only: [:create, :update, :destroy]
-  resources :foods, only: [:create, :update, :destroy]
-  resources :waters, only: [:create, :update, :destroy]
-  resources :profile, only: [:create, :update, :destroy]
+  resources :workouts, only: %i[index create update destroy]
+  resources :foods, only: %i[index create update destroy]
+  resources :waters, only: %i[index create update destroy]
+  resources :profile, only: %i[index create update destroy]
 end
