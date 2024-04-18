@@ -1,11 +1,11 @@
 class  FoodsController < ApplicationController
-  before_action :set_food, only: %i[update destroy show]
+  before_action :set_food, only: %i[update destroy]
   before_action :authenticate_request
   
   def create
+    debugger
     food = @current_user.foods.new(food_params)
-
-    if food.save
+    if food.save!
       render json: food, status: :created
     else
       render json: food.errors, status: :unprocessable_entity
@@ -29,6 +29,12 @@ class  FoodsController < ApplicationController
     end
   end
 
+  def user_foods
+    user_foods = @current_user.foods
+
+    render json: user_foods, status: :ok
+  end
+
   private
 
   def set_food
@@ -36,6 +42,6 @@ class  FoodsController < ApplicationController
   end
 
   def food_params
-    params.permit(:food_name, :calories, :id)
+    params.require(:food).permit(:food_name, :calories, :id)
   end
 end

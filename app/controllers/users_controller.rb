@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show update destroy workouts_index foods_index waters_index profile_index]
-  before_action :authenticate_request, only: %i[index show update destroy]
+  # before_action :set_user, only: %i[show update destroy workouts_index foods_index waters_index profile_index]
+  before_action :authenticate_request, except: %i[index]
 
   def index
     users = User.all
@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    render json: UserBlueprint.render(@user, view: :normal), status: 200
+    render json: UserBlueprint.render(@current_user, view: :normal), status: 200
   end
 
   def create
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
+    if @current_user.update(user_params)
       render json: @current_user, status: :ok
 
     else
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if @user.destroy
+    if @current_user.destroy
       render json: nil, status: :ok
     else
       render json: @current_user, status: :unprocessable_entity
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
 
   # FOODS
 
-  def foods_index
+  def user_foods
     user_foods = @current_user.foods
 
     render json: user_foods, status: :ok
@@ -66,6 +66,7 @@ class UsersController < ApplicationController
   # PROFILE
 
   def profile_index
+    debugger
     user_profile = @current_user.profile
 
     render json: user_profile, status: :ok
@@ -73,9 +74,9 @@ class UsersController < ApplicationController
 
   private
 
-  def set_user
-    @user = User.find(params[:id] || params[:user_id])
-  end
+  # def set_user
+  #   @current_user = User.find(params[:id] || params[:user_id])
+  # end
 
   def user_params
     params.require(:user).permit(:id, :email, :first_name, :password, :password_confirmation)

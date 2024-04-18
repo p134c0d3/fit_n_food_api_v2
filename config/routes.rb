@@ -6,14 +6,21 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :users do
-    get 'workouts', to: 'users#workouts_index'
-    get 'foods', to: 'users#foods_index'
-    get 'waters', to: 'users#waters_index'
-    get 'profile', to: 'users#profile_index'
+    collection do
+      
+      get 'workouts', to: 'users#workouts_index'
+      # get 'foods', to: 'users#user_foods'
+      get 'waters', to: 'users#waters_index'
+      get 'profile', to: 'users#profile_index'
+    end
   end
 
   resources :workouts, only: [:create, :update, :destroy]
-  resources :foods, only: [:create, :update, :destroy]
+  resources :foods do 
+    collection do
+      get 'user_foods', to: 'foods#user_foods'
+    end
+  end
   resources :waters, only: [:create, :update, :destroy]
   resources :profile, only: [:create, :update, :destroy]
 end
