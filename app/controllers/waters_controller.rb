@@ -1,5 +1,5 @@
 class WatersController < ApplicationController
-  before_action :set_water, only: %i[update destroy show]
+  before_action :set_water, only: %i[update destroy]
   before_action :authenticate_request
   
   def create
@@ -27,6 +27,12 @@ class WatersController < ApplicationController
     else
       render json: @water.errors, status: :unprocessable_entity
     end
+  end
+
+  def waters_index
+    user_waters = @current_user.waters
+
+    render json: user_waters, status: :ok
   end
 
   private

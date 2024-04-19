@@ -1,5 +1,5 @@
 class ProfileController < ApplicationController
-  before_action :set_profile, only: %i[update destroy show]
+  before_action :set_profile, only: %i[update destroy]
   before_action :authenticate_request
   
   def create
@@ -29,6 +29,18 @@ class ProfileController < ApplicationController
     end
   end
 
+  def profile_index
+    # debugger
+    user_profile = @current_user.profile
+
+    render json: user_profile, status: :ok
+  end
+
+  def show
+    render json: @current_user.profile, status: :ok
+  end
+
+
   private
 
   def set_profile
@@ -36,6 +48,6 @@ class ProfileController < ApplicationController
   end
 
   def profile_params
-    params.permit(:goals, :bio, :id)
+    params.permit(:bio, :goals, :id)
   end
 end

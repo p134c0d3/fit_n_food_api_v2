@@ -8,19 +8,31 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       
-      get 'workouts', to: 'users#workouts_index'
+      # get 'workouts', to: 'users#workouts_index'
       # get 'foods', to: 'users#user_foods'
-      get 'waters', to: 'users#waters_index'
-      get 'profile', to: 'users#profile_index'
+      # get 'waters', to: 'users#waters_index'
+      # get 'profile', to: 'users#profile_index'
     end
   end
 
-  resources :workouts, only: [:create, :update, :destroy]
+  resources :workouts do
+    collection do 
+      get 'user_workouts', to: 'workouts#workouts_index'
+    end
+  end
   resources :foods do 
     collection do
       get 'user_foods', to: 'foods#user_foods'
     end
   end
-  resources :waters, only: [:create, :update, :destroy]
-  resources :profile, only: [:create, :update, :destroy]
+  resources :waters do
+    collection do 
+      get 'user_waters', to: 'waters#waters_index'
+    end
+  end
+  resources :profile do
+    collection do
+      get 'profile', to: 'profile#profile_index'
+    end
+  end
 end

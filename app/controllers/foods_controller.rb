@@ -3,7 +3,7 @@ class  FoodsController < ApplicationController
   before_action :authenticate_request
   
   def create
-    debugger
+    # debugger
     food = @current_user.foods.new(food_params)
     if food.save!
       render json: food, status: :created

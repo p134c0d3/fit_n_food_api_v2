@@ -1,11 +1,11 @@
 class WorkoutsController < ApplicationController
-  before_action :set_workout, only: %i[update destroy show]
+  before_action :set_workout, only: %i[update destroy]
   before_action :authenticate_request
   
   def create
     workout = @current_user.workouts.new(workout_params)
 
-    if workout.save
+    if workout.save!
       render json: workout, status: :created
     else
       render json: workout.errors, status: :unprocessable_entity
@@ -27,6 +27,12 @@ class WorkoutsController < ApplicationController
     else
       render json: @workout.errors, status: :unprocessable_entity
     end
+  end
+
+  def workouts_index
+    user_workouts = @current_user.workouts
+
+    render json: user_workouts, status: :ok
   end
 
   private
